@@ -46,7 +46,8 @@ namespace FootballPlayerAPI.Controllers
                 FirstName = footballPlayerDTO.FirstName,
                 LastName = footballPlayerDTO.LastName,
                 Number = footballPlayerDTO.Number,
-                CurrentTeam = footballPlayerDTO.CurrentTeam
+                CurrentTeam = footballPlayerDTO.CurrentTeam,
+                CreatedAt = DateTime.UtcNow
             };
 
             await _context.FootballPlayers.AddAsync(footballPlayer);
@@ -91,7 +92,7 @@ namespace FootballPlayerAPI.Controllers
                 playerToUpdate.LastName = footballPlayerDTO.LastName;
             }
 
-            if (playerToUpdate.Number.HasValue)
+            if (footballPlayerDTO.Number.HasValue)
             {
                 playerToUpdate.Number = footballPlayerDTO.Number;
             }
@@ -100,6 +101,8 @@ namespace FootballPlayerAPI.Controllers
             {
                 playerToUpdate.CurrentTeam = footballPlayerDTO.CurrentTeam;
             }
+
+            playerToUpdate.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
             return Ok($"Successfully updated your player");
